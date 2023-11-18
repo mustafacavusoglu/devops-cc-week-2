@@ -1,0 +1,32 @@
+name: Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.8  # İstediğiniz Python sürümünü belirtin
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r quote_gen/requirements.txt
+        pip install -r quote_disp/requirements.txt
+    - name: Test Services
+      run: |
+        python -m pytest test/
+        
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose up --build -d
