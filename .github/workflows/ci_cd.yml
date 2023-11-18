@@ -25,7 +25,8 @@ jobs:
         pip install -r quote_disp/requirements.txt
     - name: Test Services
       run: |
-        python -m pytest test/
+        python -m pytest test/test_disp.py
+        python -m pytest test/test_gen.py
 
     - name: Build and run Docker Compose
       run: |
